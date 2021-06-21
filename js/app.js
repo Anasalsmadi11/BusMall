@@ -73,15 +73,17 @@ function addEventHandler(event ){
     }
     counter++;
     render();
+  } else{
+    drawChart();
   }
 
 }
 
-function printResult(e){
+function printResult(){
   for(let i = 0 ; i < Images.all.length; i++){
     let li = document.createElement('li');
     resultList.appendChild(li);
-    li.textContent = `${Images.all[i].name} had ${Images.all[i].showenTimes} votes, and was seen ${Images.all[i].numOfClicks} times`;
+    li.textContent = `${Images.all[i].name} had ${Images.all[i].numOfClicks} votes, and was seen ${Images.all[i].showenTimes} times`;
   }
   showResult.removeEventListener('click', printResult);
 }
@@ -100,4 +102,51 @@ function getRandomNum(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min +1) + min);
+}
+
+
+function drawChart(){
+
+  let name = [];
+  let view = [];
+  let clicks =[];
+  for(let i = 0 ; i< Images.all.length ; i++){
+    name.push(Images.all[i].name);
+    view.push(Images.all[i].showenTimes);
+    clicks.push(Images.all[i].numOfClicks);
+  }
+
+
+  let ctx = document.getElementById('myChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: name,
+      datasets: [{
+        label: '# of clicks',
+        data: clicks,
+        backgroundColor: '  rgba(91, 391, 11, 1)'
+        ,
+        borderColor: 'rgba(91, 391, 11, 1)',
+        borderWidth: 2
+      },{
+        label: '# of views' ,
+        data: view,
+        backgroundColor: 'yello'
+        ,
+        borderColor: 'rgba(55, 199, 1, 1)',
+
+        borderWidth: 2
+      }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
 }
