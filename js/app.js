@@ -15,6 +15,7 @@ let leftIndex ;
 let rightIndex;
 let middleIndex;
 
+let checkArray = [];
 
 let counter = 0;
 let round = 25;
@@ -36,12 +37,18 @@ for(let i = 0 ; i<imageArray.length ; i++){
 }
 
 function render(){
-  leftIndex = getRandomNum(0 , imageArray.length -1);
 
   do{
+    leftIndex = getRandomNum(0 , imageArray.length -1);
     middleIndex = getRandomNum(0, imageArray.length -1);
     rightIndex = getRandomNum(0, imageArray.length -1);
-  }while (leftIndex === middleIndex || leftIndex === rightIndex || middleIndex === rightIndex);
+  }while (leftIndex === middleIndex || leftIndex === rightIndex || middleIndex === rightIndex || checkArray.includes(leftIndex) || checkArray.includes(middleIndex) || checkArray.includes(rightIndex));
+
+  console.log( checkArray.includes(leftIndex) , checkArray.includes(middleIndex) ,checkArray.includes(rightIndex));
+  checkArray= [];
+
+  checkArray.push(leftIndex,middleIndex,rightIndex);
+
 
 
   leftImage.src = Images.all[leftIndex].imgSrc;
@@ -52,10 +59,13 @@ function render(){
   Images.all[middleIndex].showenTimes++;
   Images.all[leftIndex].showenTimes++;
 
+
+
 }
 
 function addEventHandler(event ){
   if((event.target.id === 'rightImage' || event.target.id === 'leftImage' || event.target.id === 'middleImage')&& counter <round){
+
 
     if(event.target.id === 'rightImage'){
       Images.all[rightIndex].numOfClicks++;
