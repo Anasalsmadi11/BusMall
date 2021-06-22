@@ -20,15 +20,21 @@ let checkArray = [];
 let counter = 0;
 let round = 25;
 
+
+
+
 function Images(name, src){
   this.name = name;
   this.imgSrc = `./img/${src}`;
   this.showenTimes = 0;
   this.numOfClicks = 0;
   Images.all.push(this); // we put this which also have the same meaning of the function 'Images' and by doing this we get an array that contain the four paramaters'name,src,shownTimes,numOfClicks' ..try console.log(Images.all)
+  Images.all.push(this);
 }
 
 Images.all= []; //all is property inside the constructor function we can name it anything we want
+
+
 
 for(let i = 0 ; i<imageArray.length ; i++){
   new Images(imageArray[i].split('.')[0] ,imageArray[i]);
@@ -83,11 +89,28 @@ function addEventHandler(event ){
     }
     counter++;
     render();
+
+    localStorage.setItem('storedObj' , JSON.stringify(Images.all));
+    //console.log('storedOb');
+
   } else{
     drawChart();
   }
 
 }
+
+function getData(){
+  let convertedObj = JSON.parse(localStorage.getItem('storedObj'));
+  //console.log(convertedObj);
+  for(let i= 0 ; i < convertedObj.length ; i++){
+    new Images (convertedObj[i].name , convertedObj[i].src);
+
+    // console.log(Images.all);
+
+  }
+}
+getData();
+
 
 function printResult(){
   for(let i = 0 ; i < Images.all.length; i++){
