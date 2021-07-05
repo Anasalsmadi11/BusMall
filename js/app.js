@@ -25,7 +25,7 @@ let round = 25;
 
 function Images(name, src, showenTimes= 0 , numOfClicks =0){
   this.name = name;
-  this.imgSrc = `./img/${src}`;
+  this.imgSrc =`./img/${src}`;
   this.showenTimes = showenTimes;
   this.numOfClicks = numOfClicks;
   Images.all.push(this); // we put this which also have the same meaning of the function 'Images' and by doing this we get an array that contain the four paramaters'name,src,shownTimes,numOfClicks' ..try console.log(Images.all)
@@ -87,10 +87,9 @@ function addEventHandler(event ){
 
     }
     counter++;
-    render();
-
+    render(); // in every click on images i need to render them again(to get three random images again) and thats why i put render here
     localStorage.setItem('storedObj' , JSON.stringify(Images.all));
-    //console.log('storedOb');
+
 
   } else{
     drawChart();
@@ -100,18 +99,20 @@ function addEventHandler(event ){
 
 function getData(){
   let convertedObj = JSON.parse(localStorage.getItem('storedObj'));
-  //console.log(convertedObj);
+  console.log(convertedObj);
   if(convertedObj){
     Images.all= [];
-    for(let i= 0 ; i < convertedObj.length ; i++){
-      new Images (convertedObj[i].name , convertedObj[i].src, convertedObj[i].showenTimes , convertedObj[i].numOfClicks);
-
-    // console.log(Images.all);
+    for(let j= 0 ; j < convertedObj.length ; j++){
+      new Images (convertedObj[j].name , convertedObj[j].src, convertedObj[j].showenTimes , convertedObj[j].numOfClicks);
+      
+     
     }
+    console.log(Images.all);
   }
 }
 getData();
 render();
+//console.log(Images.all);
 
 function printResult(){
   for(let i = 0 ; i < Images.all.length; i++){
