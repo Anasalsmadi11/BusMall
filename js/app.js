@@ -25,7 +25,7 @@ let round = 25;
 
 function Images(name, src, showenTimes= 0 , numOfClicks =0){
   this.name = name;
-  this.imgSrc =`./img/${src}`;
+  this.imgSrc =src;
   this.showenTimes = showenTimes;
   this.numOfClicks = numOfClicks;
   Images.all.push(this); // we put this which also have the same meaning of the function 'Images' and by doing this we get an array that contain the four paramaters'name,src,shownTimes,numOfClicks' ..try console.log(Images.all)
@@ -36,7 +36,7 @@ Images.all= []; //all is property inside the constructor function we can name it
 
 
 for(let i = 0 ; i<imageArray.length ; i++){
-  new Images(imageArray[i].split('.')[0] ,imageArray[i]);
+  new Images(imageArray[i].split('.')[0] ,`./img/${imageArray[i]}`);
   //console.log(imageArray[i].split('.')[0] ,imageArray[i]);
 
 }
@@ -102,12 +102,12 @@ function getData(){
   console.log(convertedObj);
   if(convertedObj){
     Images.all= [];
-    for(let j= 0 ; j < convertedObj.length ; j++){
-      new Images (convertedObj[j].name , convertedObj[j].src, convertedObj[j].showenTimes , convertedObj[j].numOfClicks);
-      
-     
-    }
     console.log(Images.all);
+    for(let j= 0 ; j < convertedObj.length ; j++){
+      new Images (convertedObj[j].name , convertedObj[j].imgSrc, convertedObj[j].showenTimes , convertedObj[j].numOfClicks); //this new constructor function will fill the empty Images.all array since we assigned it as an empty two lines upper try to comment this line and see the result
+
+
+    }
   }
 }
 getData();
@@ -128,7 +128,6 @@ showResult.addEventListener('click' , printResult);
 imageSec.addEventListener('click' , addEventHandler);
 
 
-render();
 
 
 
